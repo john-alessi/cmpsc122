@@ -1,22 +1,5 @@
 #include "process.h"
 
-//  Process Constructor
-//  Initalizes a process as a single burst of CPU usage,
-//  which may or may not be allowed to run all at once.
-//  When that CPU time is complete, so is the process.
-
-Process::Process( int id )  // a constructor
-{
-    myId = id;
-    bursts = 4 + rand() % 3;    // several CPU bursts
-    for (int i=0; i < bursts; i++)
-    {
-        usages[i] = 80 + rand() % 120;
-        nextState[i] = 'D';     // some disk activity
-    }
-    nextState[bursts-1] = 'Q';  // all done!
-}
-
 //  Run a Process for some time
 //  The process would like to complete its current CPU burst,
 //  but is currently only allowed what is granted to it.
@@ -52,3 +35,41 @@ void Process::run( int &clock, int allowance, char &next )
   //cout << "\tRUN METHOD COMPLETE" << endl;
 }
 
+Computation::Computation( int id )
+{
+  myId = id;
+  bursts = 4 + rand() % 3;// several lengthy CPU bursts
+  for (int i=0; i < bursts; i++)
+    {
+      usages[i] = 200 + rand() % 120;
+      nextRequest[i] = &disk;// some disk activity
+    }
+  nextRequest[bursts-1] = NULL;// all done!
+}
+
+Download::Download( int id )
+{
+  myId = id;
+  bursts = 9;// 4 chances to move data, then wrap up
+  for (int i=0; i < bursts; i++)
+    {
+      usages[i] = 40 + rand() % 20;   // not much CPU needed
+      if (i%2 == 0)
+	nextRequest[i] = &net;// alternate network
+      else
+	nextRequest[i] = &disk;// and disk
+    }
+  nextRequest[bursts-1] = NULL;// all done!
+}
+
+Interact::Interact( int id )
+{
+  myId = id;
+  bursts = 4;// enough to simulate till others are all done
+  for (int i=0; i < bursts; i++)
+    {
+      usages[i] = 30 + rand() % 20;
+      nextRequest[i] = &console;// work with console
+    }
+  nextRequest[bursts-1] = NULL;// all done!
+}

@@ -2,4 +2,5 @@ all:
 	g++ src/*.cpp src/*.h -o homework
 
 clean:
-	rm homework
+	rm -f homework
+	rm -rf new
