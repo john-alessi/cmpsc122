@@ -1,5 +1,37 @@
 #include "scheduler.h"
 
+const int DISKTIME = 200;		// how long a disk action requires
+
+//  Request to access the disk (secondary storage)
+//  A process may occasionally need to access a file or the
+//  virtual memory system.  The disk may only service one
+//  process at a time, and its readiness will be simulated
+//  with a time index also.
+//  Parameters:
+//  	pid  	  (input int)		process id (subscript to tasks[])
+//  	clock	  (input int)		overall simulation clock time
+//  	diskReady (modified int)	when the disk is available for use
+//	tasks	  (Process array)	given to update process history
+//	future	  (modified ProcList)	a process may proceed after using disk
+//
+
+void Scheduler::diskRequest( int pid, int clock, int &diskReady, Process tasks[], ProcList &future )
+{
+  if(clock < diskReady) {
+    //tasks[pid].addLog(clock, '-');
+    tasks[pid].addLog(diskReady, 'D');
+    tasks[pid].addLog(diskReady + DISKTIME, '-');
+    diskReady += DISKTIME;
+  }
+  else {
+    tasks[pid].addLog(clock, 'D');
+    tasks[pid].addLog(clock + DISKTIME, '-');
+    diskReady = clock + DISKTIME;
+  }
+  future.insert(pid, diskReady, 'X');
+}
+
+
 //  Scheduler Simulation
 //  Simulates a process scheduler for a collecdtion of tasks
 //  Parameters:
@@ -15,7 +47,7 @@
 //  wishing to use the CPU, and a future list of events that will
 //  occur later in the simulation.  A simulation clock advances to
 //  identify which events occur in which order.
-void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
+void Scheduler::runScheduler( Process tasks[], int arrival[], int size, int allowance )
 { 
     int pid;			// process wanting action (same as process's index in tasks[])
     char nextAct;		// and the action it wants
@@ -24,8 +56,8 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
     for (int i=0; i < size; i++)
     {
 	future.insert( i, arrival[i], 'X');	// all want to run
-	tasks[i]->restart();			// and start at beginning
-	tasks[i]->addLog( arrival[i], '-');	// might have to wait
+	tasks[i].restart();			// and start at beginning
+	tasks[i].addLog( arrival[i], '-');	// might have to wait
     }
 
     clock = 0;			// initialize simulation clock
