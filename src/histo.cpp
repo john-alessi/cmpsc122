@@ -28,18 +28,18 @@ using namespace std;
 
 #include "histo.h"
 
-void displayHistory(Process history[], int size, int start, int stop) {
+void displayHistory(Process* history[], int size, int start, int stop) {
   int range = stop - start;
   float charScale = range/50.0;
   for(int i = 0; i < size; i++) {
     for(float t = (float)start; t <= stop; t+= charScale) {
-      if(t < history[i].getLog().leadTime()) {
+      if(t < history[i]->getLog().leadTime()) {
 	cout << " ";
       }
       else {
-	ProcIterator it = history[i].getLog().begin();
-	char prev = history[i].getLog().begin().state();
-	while (it != history[i].getLog().end() && t > it.time()) {
+	ProcIterator it = history[i]->getLog().begin();
+	char prev = history[i]->getLog().begin().state();
+	while (it != history[i]->getLog().end() && t > it.time()) {
 	  prev = it.state();
 	  it.advance();
 	}
