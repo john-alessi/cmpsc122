@@ -24,7 +24,22 @@ using namespace std;
 //      even if it had to be created to do so
 void ProcTree::recursiveInsert( ProcTreeNode *&node, int val )
 {
-
+  if(val < node->procID) {
+    if(node->left == NULL) {
+      node->left = new ProcTreeNode(val);
+    }
+    else {
+      recursiveInsert(node->left, val);
+    }
+  }
+  else {
+    if(node->right == NULL) {
+      node->right = new ProcTreeNode(val);
+    }
+    else {
+      recursiveInsert(node->right, val);
+    }
+  }
 }
 
 //  insert
@@ -44,9 +59,16 @@ void ProcTree::insert( int val )
 //  	val	(input int)		value to insert
 //  Pre-condition:
 //      The tree is assumed to be non-empty
-int ProcTree::recursiveRemoveMax( ProcTreeNode *&nodel )
+int ProcTree::recursiveRemoveMax( ProcTreeNode *&node )
 {
-
+  if(node->right != NULL && node->right->right != NULL) {
+    recursiveRemoveMax(node->right);
+  }
+  else {
+    ProcTreeNode* removal = node->right;
+    node->right = node->right->left;
+    delete removal;
+  }
 }
 
 //  removeMax
