@@ -1,4 +1,5 @@
 #include "process.h"
+#include "device.h"
 
 //  Run a Process for some time
 //  The process would like to complete its current CPU burst,

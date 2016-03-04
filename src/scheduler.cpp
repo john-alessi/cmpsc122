@@ -20,6 +20,8 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
     int pid;			// process wanting action (same as process's index in tasks[])
     char nextAct;		// and the action it wants
     int diskReady = 0;
+
+    Device* nextDevice;
     
     for (int i=0; i < size; i++)
     {
@@ -42,9 +44,9 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
       //choose process from ready set and run it
       if(!noneReady()) {
 	chooseProcess(pid);//segfaulting when readyset is empty
-	tasks[pid].run(clock, allowance, nextAct);
+	tasks[pid]->run(clock, allowance(), nextDevice);
 	if(nextAct == 'D') {
-	  diskRequest(pid, clock, diskReady, tasks, future);
+	  //diskRequest(pid, clock, diskReady, tasks, future);
 	}
 	else if(nextAct != 'Q') {
 	  addProcess(pid);
