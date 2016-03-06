@@ -35,11 +35,10 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
     clock = 0;			// initialize simulation clock
     //  repeat while anything is ready to run now or later
 
-    
     while ( !noneReady() || !future.empty() )
     {
       //if any future process is "ready", move it to the ready set
-      if(!future.empty() && future.leadTime() <= clock) {
+      while(!future.empty() && future.leadTime() <= clock) {
 	future.popFront(pid, nextAct);
 	addProcess(pid);
       }
