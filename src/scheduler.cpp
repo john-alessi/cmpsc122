@@ -30,6 +30,10 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
 	future.insert( i, arrival[i], 'X');	// all want to run
 	tasks[i]->restart();			// and start at beginning
 	tasks[i]->addLog( arrival[i], '-');	// might have to wait
+	disk.restart();
+	net.restart();
+	console.restart();
+	cpu.restart();
     }
 
     clock = 0;			// initialize simulation clock

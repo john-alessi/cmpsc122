@@ -58,6 +58,8 @@ int ProcTree::recursiveRemoveMax( ProcTreeNode *&node )
 {
   if(node->right == NULL) {
     int id = node->procID;
+    ProcTreeNode* batman = node->left;
+    delete node;
     node = node->left;
     return id;
   }
