@@ -17,7 +17,8 @@
 //  occur later in the simulation.  A simulation clock advances to
 //  identify which events occur in which order.
 void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
-{ 
+{
+  cout << name << endl;
     int pid;			// process wanting action (same as process's index in tasks[])
     char nextAct;		// and the action it wants
     int diskReady = 0;

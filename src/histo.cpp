@@ -46,8 +46,9 @@ void displayHistory(Process* history[], int size, int start, int stop) {
 	cout << prev;
       }
     }
-    //history[i].getLog().dump();
+    //history[i]->getLog().dump();
     cout << endl;
   }
+  cout << endl;
   //cout << "\tDISPLAY METHOD COMPLETE" << endl;
 }

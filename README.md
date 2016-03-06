@@ -2,4 +2,8 @@
 Homework project for CMPSC 122
 
 #TO DO:
-2 new objects defined in scheduler.h
+-finish Priority and Preemptive scheduler types
+
+#ISSUES:
+-devices not being accessed in round-robin scheduler
+-segfault when running priority scheduler
