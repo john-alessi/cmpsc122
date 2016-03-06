@@ -9,8 +9,17 @@
 //      future	(modified ProcList)	record when operation is complete
 void Device::request( int pid, int clock, Process *tasks[], ProcList &future )
 {
-
-
+  if(clock < duration) {
+    tasks[pid]->addLog(readyTime, action);
+    tasks[pid]->addLog(readyTime + duration, '-');
+    readyTime += duration;
+  }
+  else {
+    tasks[pid]->addLog(clock, action);
+    tasks[pid]->addLog(clock + duration, '-');
+    readyTime = clock + duration;
+  }
+  future.insert(pid, readyTime, 'X');//may have to request cpu instead
 }
 
 //  Each device records a letter to be used in the summary display

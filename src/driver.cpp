@@ -15,7 +15,7 @@ int main()
 	{ new Computation(0), new Download(1), new Download(2), new Interact(3) };
    int arrival[] = {0, 40, 80, 120};   // arrive at these times
  
-   for (int i=0; i<4; i++)
+   for (int i=0; i<4; i++)//runs simulation for each scheduler type
    {
 	scheds[i]->runScheduler( tasks, arrival, 4 );
 	displayHistory( tasks, 4, 0, 3000 );

@@ -1,4 +1,5 @@
 #include "scheduler.h"
+#include "device.h"
 
 //  Scheduler Simulation
 //  Simulates a process scheduler for a collecdtion of tasks
@@ -43,13 +44,10 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
       }
       //choose process from ready set and run it
       if(!noneReady()) {
-	chooseProcess(pid);//segfaulting when readyset is empty
+	chooseProcess(pid);
 	tasks[pid]->run(clock, allowance(), nextDevice);
-	if(nextAct == 'D') {
-	  //diskRequest(pid, clock, diskReady, tasks, future);
-	}
-	else if(nextAct != 'Q') {
-	  addProcess(pid);
+	if(nextDevice != NULL) {
+	  nextDevice->request(pid, clock, tasks, future);
 	}
       }
       else {
