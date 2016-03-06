@@ -56,13 +56,13 @@ void ProcTree::insert( int val )
 //      The tree is assumed to be non-empty
 int ProcTree::recursiveRemoveMax( ProcTreeNode *&node )
 {
-  if(node->right != NULL && node->right->right != NULL) {
-    recursiveRemoveMax(node->right);
+  if(node->right == NULL) {
+    int id = node->procID;
+    node = node->left;
+    return id;
   }
   else {
-    ProcTreeNode* removal = node->right;
-    node->right = node->right->left;
-    delete removal;
+    return recursiveRemoveMax(node->right);
   }
 }
 
@@ -70,7 +70,7 @@ int ProcTree::recursiveRemoveMax( ProcTreeNode *&node )
 //  identifies and removes the largest value in the tree
 int ProcTree::removeMax()
 {
-    return recursiveRemoveMax( root );
+  return recursiveRemoveMax(root);
 }
 
 
