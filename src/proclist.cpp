@@ -1,8 +1,6 @@
 #include <iostream>
 using namespace std;
 
-#define NULL 0
-
 // List of Process ProcList Information
 // This is a simple linked list, all of whose elements record
 // information about a process in a simulated process scheduler.
@@ -63,48 +61,42 @@ void ProcList::pushBack( int procId, int time, char state )
 //  remove the element at the front end of the list
 //  Two reference parameters are provided to hold onto information
 //  from the removed element.  The time index is considered unnecessary.
-void ProcList::popFront( int &procId, char &state )
-{
-  procId = head->procID;
-  state = head->state;
-  head = head->next;
+void ProcList::popFront( int &procId, char &state ) {
+  ProcListElement* removal = head;
+  if(empty()) {
+    tail == NULL;
+  }
+  else {
+    head = head->next;
+    procId = removal->procID;
+    state = removal->state;
+    delete removal;
+  }
 }
 
 //  adds a new element into a sorted linked list
 //  which is sorted in increasing order according to the 'time' argument
 void ProcList::insert( int procId, int time, char state )
 {
-   ProcListElement *newEle = new ProcListElement( procId, time, state );
-
-   /*ProcListElement *insertPoint = head;
-   while(newEle->time > insertPoint->time && insertPoint->next != NULL) {
-     insertPoint = insertPoint->next;
-   }
-   newEle->next = insertPoint->next;
-   insertPoint->next = newEle;*/
-
-   if(empty()) {
-     head = newEle;
-     tail = newEle;
-   }
-   else if(newEle->time > tailTime()) {
-     tail->next = newEle;
-     tail = newEle;
-   }
-   else if(newEle->time < leadTime()) {
-     newEle->next = head;
-     head = newEle;
-   }
-   else {
-     ProcListElement *it = head;
-     while(newEle->time > it->time && it->next != NULL) {
-       it = it->next;
-     }
-     newEle->next = it->next;
-     //cout << "proclist_insert_test" << endl;
-     it->next = newEle;
-   }
-   
+  ProcListElement *newEle = new ProcListElement( procId, time, state );
+  if (head == NULL) {
+    head = newEle;
+    tail = newEle;
+  }
+  else if (time < head->time) {
+    newEle->next = head;
+    head = newEle;
+  }
+  else if (time >= tail->time ) {
+    tail->next = newEle;
+    tail = newEle;
+  }
+  else {
+    ProcListElement *it;
+    for (it = head; it->next->time < time; it = it->next) { }
+    newEle->next = it->next;
+    it->next = newEle;
+  }
    //cout << "\tINSERT METHOD COMPLETE" << endl;
 }
 
@@ -118,7 +110,7 @@ void ProcList::condense()
 //in case of duplicate times, keep last element
 //in case of duplicate states, keep first element
 {
-  ProcListElement *it = head;
+/*ProcListElement *it = head;
   while(it->next != NULL && it->next->next != NULL) {
     if(it->next->time == it->next->next->time) {
       it->next = it->next->next;
@@ -133,7 +125,7 @@ void ProcList::condense()
   }
   if(head->time == head->next->time) {
     head = head->next;
-  }
+    }*/
 }
 
 //diagnostic method, not used in solution

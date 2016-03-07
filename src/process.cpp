@@ -25,12 +25,20 @@ void Process::run( int &clock, int allowance, Device *&next)
   }
   else {
     clock += remainingTime;
+    if(currentCycle < bursts) {
+      next = nextRequest[currentCycle++];
+      remainingTime = usages[currentCycle];
+    }
+    else {
+      next = NULL;
+    }
+    /*    clock += remainingTime;
     next = nextRequest[currentCycle];
     if(next == NULL) {
       addLog(clock, 'Q');
     }
     currentCycle++;
-    remainingTime = usages[currentCycle];
+    remainingTime = usages[currentCycle];*/
   }
   addLog(clock, '-');
   //cout << "\tRUN METHOD COMPLETE" << endl;
