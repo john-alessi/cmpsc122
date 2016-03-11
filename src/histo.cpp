@@ -29,16 +29,9 @@ using namespace std;
 #include "histo.h"
 
 void displayHistory(Process* history[], int size, int start, int stop) {
-  float avgTurnaround = 0;
-  float nonInteractiveTasks = 0;
-
   int range = stop - start;
   float charScale = range/50.0;
   for(int i = 0; i < size; i++) {
-    if(history[i]->isInteractive()) {
-      avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());///
-      nonInteractiveTasks++;
-    }
     for(float t = (float)start; t <= stop; t+= charScale) {
       if(t < history[i]->getLog().leadTime()) {
 	cout << " ";
@@ -53,11 +46,49 @@ void displayHistory(Process* history[], int size, int start, int stop) {
 	cout << prev;
       }
     }
-    //history[i]->getLog().dump();
     cout << endl;
   }
+
+  float avgTurnaround = 0;
+  int nonInteractiveTasks = 0;
+  for(int i = 0; i < size; i++) {
+    if(history[i]->isInteractive()) {
+      avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());///
+      nonInteractiveTasks++;
+    }
+  }
   avgTurnaround /= nonInteractiveTasks;
+
+  int responses = 0;
+  float avgResponse = 0;
+  int responseStart;
+  char prev;
+  for(int i = 0; i < size; i++) {
+    if(history[i]->isInteractive()) {
+      ProcIterator it = history[i]->getLog().begin();
+      while(it.state() != 'I') {
+	it.advance();
+      }
+      prev = it.state();
+      it.advance();
+      while(it != history[i]->getLog().end()) {
+	if(prev == 'I') {
+	  responseStart = it.time();
+	}
+	else if(it.state() == 'I') {
+	  responses++;
+	  avgResponse += (it.time() - responseStart);
+	}
+	prev = it.state();
+	it.advance();
+      }
+      cout << endl;
+    }
+  }
+  avgResponse /= responses;
+  
   cout << "Average turnaround time:\t" << avgTurnaround << endl;
+  cout << "Average response time:\t\t" << avgResponse << endl;
   cout << endl;
   //cout << "\tDISPLAY METHOD COMPLETE" << endl;
 }
