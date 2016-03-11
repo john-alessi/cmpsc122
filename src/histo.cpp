@@ -24,6 +24,8 @@
 #define NULL 0
 
 #include <iostream>
+#include <math.h>
+
 using namespace std;
 
 #include "histo.h"
@@ -86,15 +88,39 @@ void displayHistory(Process* history[], int size, int start, int stop) {
 	prev = it.state();
 	it.advance();
       }
-      cout << endl;
     }
   }
   avgResponse /= responses;
-  
-  cout << "Average turnaround time:\t" << avgTurnaround << endl;
-  cout << "Average response time:\t\t" << avgResponse << endl;
-  cout << "Highest response time:\t\t" << maxResponse << endl;
 
+  float variance = 0;
+  float stdDev = 0;
+  for(int i = 0; i < size; i++) {
+    if(history[i]->isInteractive()) {
+      ProcIterator it = history[i]->getLog().begin();
+      while(it.state() != 'I') {
+	it.advance();
+      }
+      prev = it.state();
+      it.advance();
+      while(it != history[i]->getLog().end()) {
+	if(prev == 'I') {
+	  responseStart = it.time();
+	}
+	else if(it.state() == 'I') {
+	  variance += (avgResponse - (it.time() - responseStart))*(avgResponse - (it.time() - responseStart));
+	}
+	prev = it.state();
+	it.advance();
+      }
+    }
+  }
+  variance /= responses;
+  stdDev = sqrt(variance);
+  
+  cout << "Average turnaround time:\t\t" << avgTurnaround << endl;
+  cout << "Average response time:\t\t\t" << avgResponse << endl;
+  cout << "Highest response time:\t\t\t" << maxResponse << endl;
+  cout << "Standard deviation of response times:\t" << stdDev << endl;
   cout << endl;
   //cout << "\tDISPLAY METHOD COMPLETE" << endl;
 }
