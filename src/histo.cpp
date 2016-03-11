@@ -62,6 +62,7 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   int responses = 0;
   float avgResponse = 0;
   int responseStart;
+  int maxResponse = 0;
   char prev;
   for(int i = 0; i < size; i++) {
     if(history[i]->isInteractive()) {
@@ -78,6 +79,9 @@ void displayHistory(Process* history[], int size, int start, int stop) {
 	else if(it.state() == 'I') {
 	  responses++;
 	  avgResponse += (it.time() - responseStart);
+	  if(maxResponse < it.time() - responseStart) {
+	    maxResponse = it.time() - responseStart;
+	  }
 	}
 	prev = it.state();
 	it.advance();
@@ -89,6 +93,8 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   
   cout << "Average turnaround time:\t" << avgTurnaround << endl;
   cout << "Average response time:\t\t" << avgResponse << endl;
+  cout << "Highest response time:\t\t" << maxResponse << endl;
+
   cout << endl;
   //cout << "\tDISPLAY METHOD COMPLETE" << endl;
 }
