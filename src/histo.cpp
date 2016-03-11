@@ -29,9 +29,12 @@ using namespace std;
 #include "histo.h"
 
 void displayHistory(Process* history[], int size, int start, int stop) {
+  float avgTurnaround = 0;
+
   int range = stop - start;
   float charScale = range/50.0;
   for(int i = 0; i < size; i++) {
+    avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());///
     for(float t = (float)start; t <= stop; t+= charScale) {
       if(t < history[i]->getLog().leadTime()) {
 	cout << " ";
@@ -49,6 +52,8 @@ void displayHistory(Process* history[], int size, int start, int stop) {
     //history[i]->getLog().dump();
     cout << endl;
   }
+  avgTurnaround /= size;
+  cout << "Average turnaround time:\t" << avgTurnaround << endl;
   cout << endl;
   //cout << "\tDISPLAY METHOD COMPLETE" << endl;
 }
