@@ -87,19 +87,14 @@ public:
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class ShortestRemainingTime : public Scheduler
+{
+  //new code goes here
+ private:
+  Process** procs;
+ public:
+  void runScheduler(Process* tasks[], int arrival[], int size) {
+    procs = tasks;
+    Scheduler::runScheduler(tasks, arrival, size);
+  }
+};

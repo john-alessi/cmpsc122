@@ -39,6 +39,14 @@ public:
     return false; // assume a background job
   }
 
+  int getProcId() {
+    return myId;
+  }
+
+  int getRemainingTime() {
+    return remainingTime;
+  }
+
   void run( int &, int, Device *& );
 };
 
