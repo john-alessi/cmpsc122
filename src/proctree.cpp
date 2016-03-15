@@ -89,3 +89,29 @@ ostream& operator<<( ostream& stream, ProcTree &t )
     return stream << *t.root;
 }
 
+Heap::Heap(int size) {
+  cout << "initializing heap of size " << size << endl;
+  values = new int[size + 1];
+  nextEmpty = 1;
+}
+
+void Heap::push(int value) {
+  cout << "pushing value " << value << endl;
+  int position = nextEmpty;
+  while(position > 1 && value < values[position/2]) {
+    values[position] = values[position/2];
+    position /= 2;
+  }
+  values[position] = value;
+  nextEmpty++;
+}
+
+int Heap::pop() {
+  cout << "popping";
+  return 0;
+}
+
+bool Heap::isEmpty() {
+  cout << "checking if empty" << endl;
+  return nextEmpty == 1;
+}

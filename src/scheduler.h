@@ -89,12 +89,22 @@ public:
 
 class ShortestRemainingTime : public Scheduler
 {
-  //new code goes here
  private:
   Process** procs;
+  Heap* heap;
  public:
   void runScheduler(Process* tasks[], int arrival[], int size) {
     procs = tasks;
+    heap = new Heap(size);
     Scheduler::runScheduler(tasks, arrival, size);
+  }
+  void addProcess (int procId) {
+    heap->push(procId);
+  }
+  void chooseProcess (int& procId) {
+    procId = heap->pop();
+  }
+  bool noneReady() {
+    return heap->isEmpty();
   }
 };

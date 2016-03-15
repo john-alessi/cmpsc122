@@ -37,3 +37,14 @@ class ProcTree
 	int recursiveRemoveMax( ProcTreeNode *& );
 };
 
+class Heap
+{
+ private:
+  int* values;
+  int nextEmpty;
+ public:
+  Heap(int size);
+  void push(int value);
+  int pop();
+  bool isEmpty();
+};
