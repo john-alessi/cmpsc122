@@ -87,6 +87,19 @@ public:
   }
 };
 
+class Heap
+{
+ private:
+  Process** tasks;
+  int* values;
+  int nextEmpty;
+ public:
+  Heap(int size, Process** procs);
+  void push(int value);
+  int pop();
+  bool isEmpty();
+};
+
 class ShortestRemainingTime : public Scheduler
 {
  private:
@@ -95,7 +108,7 @@ class ShortestRemainingTime : public Scheduler
  public:
   void runScheduler(Process* tasks[], int arrival[], int size) {
     procs = tasks;
-    heap = new Heap(size);
+    heap = new Heap(size, tasks);
     Scheduler::runScheduler(tasks, arrival, size);
   }
   void addProcess (int procId) {

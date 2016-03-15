@@ -60,3 +60,48 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
     }
     //cout << "\tRUNSCHEDULER METHOD COMPLETE" << endl;
 }
+
+Heap::Heap(int size, Process** procs) {
+  tasks = procs;
+  values = new int[size + 1];
+  nextEmpty = 1;
+}
+
+void Heap::push(int value) {
+  int position = nextEmpty;
+  while(position > 1 && tasks[value]->getRemainingTime() < tasks[values[position/2]]->getRemainingTime()) {
+    values[position] = values[position/2];
+    position /= 2;
+  }
+  values[position] = value;
+  nextEmpty++;
+}
+
+int Heap::pop() {
+  int value = values[1];
+  bool done = false;
+  int position = 1;
+  nextEmpty--;
+  values[position] = values[nextEmpty];
+  int child = 2;
+  while(child < nextEmpty && !done) {
+    if(child + 1 < nextEmpty && values[child+1] < values[child]) {
+      child++;
+    }
+    if(values[position] < values[child]) {
+      done = true;
+    }
+    else {
+      int tmp = values[child];
+      values[child] = values[position];
+      values[position] = tmp;
+      //swap values[child] and values[position];
+      position = child;
+      child = 2*position;
+    }
+  }
+}
+
+bool Heap::isEmpty() {
+  return nextEmpty == 1;
+}

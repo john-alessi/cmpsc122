@@ -2,4 +2,4 @@
 Homework project for CMPSC 122
 
 #TO DO:
-*implement pop() function for the heap data structure
+*rework pop() function to look at remaining time instead of PID

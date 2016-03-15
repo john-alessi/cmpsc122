@@ -8,6 +8,9 @@
 
 #include <iostream>
 #include <string>
+
+//#include "process.h"
+
 using namespace std;
 
 class ProcTreeNode
@@ -35,16 +38,4 @@ class ProcTree
     private:
 	void recursiveInsert( ProcTreeNode *&, int );
 	int recursiveRemoveMax( ProcTreeNode *& );
-};
-
-class Heap
-{
- private:
-  int* values;
-  int nextEmpty;
- public:
-  Heap(int size);
-  void push(int value);
-  int pop();
-  bool isEmpty();
 };
