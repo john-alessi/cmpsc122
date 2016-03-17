@@ -68,6 +68,7 @@ Heap::Heap(int size, Process** procs) {
 }
 
 void Heap::push(int value) {
+  //cout << "pushing value " << value << endl;///
   int position = nextEmpty;
   while(position > 1 && tasks[value]->getRemainingTime() < tasks[values[position/2]]->getRemainingTime()) {
     values[position] = values[position/2];
@@ -78,6 +79,7 @@ void Heap::push(int value) {
 }
 
 int Heap::pop() {
+  //cout << "\tpopping value " << values[1] << endl; ///
   int value = values[1];
   bool done = false;
   int position = 1;
@@ -85,10 +87,10 @@ int Heap::pop() {
   values[position] = values[nextEmpty];
   int child = 2;
   while(child < nextEmpty && !done) {
-    if(child + 1 < nextEmpty && values[child+1] < values[child]) {
+    if(child + 1 < nextEmpty && tasks[values[child+1]]->getRemainingTime() < tasks[values[child]]->getRemainingTime()) {
       child++;
     }
-    if(values[position] < values[child]) {
+    if(tasks[values[position]]->getRemainingTime() < tasks[values[child]]->getRemainingTime()) {
       done = true;
     }
     else {
@@ -100,6 +102,7 @@ int Heap::pop() {
       child = 2*position;
     }
   }
+  return value;
 }
 
 bool Heap::isEmpty() {

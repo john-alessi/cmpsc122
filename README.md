@@ -1,5 +1,5 @@
 # cmpsc122
 Homework project for CMPSC 122
 
-#TO DO:
-*rework pop() function to look at remaining time instead of PID
+#ISSUES:
+*shortest remaining policy produces identical results to the priority scheduler, not sure if that's supposed to happen.

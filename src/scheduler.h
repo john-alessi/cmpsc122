@@ -107,6 +107,7 @@ class ShortestRemainingTime : public Scheduler
   Heap* heap;
  public:
   void runScheduler(Process* tasks[], int arrival[], int size) {
+    name = "Shortest Remaining Time";
     procs = tasks;
     heap = new Heap(size, tasks);
     Scheduler::runScheduler(tasks, arrival, size);
