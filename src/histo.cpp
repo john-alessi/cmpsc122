@@ -54,7 +54,7 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   float avgTurnaround = 0;
   int nonInteractiveTasks = 0;
   for(int i = 0; i < size; i++) {
-    if(history[i]->isInteractive()) {
+    if(!history[i]->isInteractive()) {
       avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());///
       nonInteractiveTasks++;
     }
@@ -90,7 +90,9 @@ void displayHistory(Process* history[], int size, int start, int stop) {
       }
     }
   }
-  avgResponse /= responses;
+  if(avgResponse != 0) {
+    avgResponse /= responses;
+  }
 
   float variance = 0;
   float stdDev = 0;
@@ -114,8 +116,10 @@ void displayHistory(Process* history[], int size, int start, int stop) {
       }
     }
   }
-  variance /= responses;
-  stdDev = sqrt(variance);
+  if(variance != 0) {
+    variance /= responses;
+    stdDev = sqrt(variance);
+  }
   
   cout << "Average turnaround time:\t\t" << avgTurnaround << endl;
   cout << "Average response time:\t\t\t" << avgResponse << endl;
