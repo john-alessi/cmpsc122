@@ -121,4 +121,7 @@ class ShortestRemainingTime : public Scheduler
   bool noneReady() {
     return heap->isEmpty();
   }
+  int allowance() {
+    return 1;
+  }
 };
