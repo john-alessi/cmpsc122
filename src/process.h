@@ -62,7 +62,7 @@ public:
   Download( int id );
 };
 
-class Interact: public Process
+class Interact : public Process
 {
 public:
   Interact( int id );
@@ -71,3 +71,14 @@ public:
     return true;
   }
 };	
+
+class Shell : public Process//rework to extend Interact instead of Process
+{
+public:
+  Shell(int id);
+  bool isInteractive()
+  {
+    return true;
+  }
+};
+

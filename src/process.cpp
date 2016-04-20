@@ -82,3 +82,14 @@ Interact::Interact( int id )
     }
   nextRequest[bursts-1] = NULL;// all done!
 }
+
+Shell::Shell(int id) {
+  myId = id;
+  bursts = 5; //heavily affects runtime of the simulation
+  for (int i=0; i < bursts; i++)
+    {
+      usages[i] = 30 + rand() % 20;
+      //nextRequest[i] = &user; //not yet implemented
+    }
+  nextRequest[bursts-1] = NULL;// all done!
+}
