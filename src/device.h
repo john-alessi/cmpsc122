@@ -9,7 +9,7 @@ class Process;
 class Device
 {
   friend class Process; // ADDED BY ME FOR DEBUG COUT; REMOVE
-private:
+protected:
   ProcList requests;
   char action;   // letter used for display
   int duration;  // how long the operation might take
@@ -23,4 +23,11 @@ public:
   void request( int, int, Process* [], ProcList & );
 };
 
+class User : public Device
+{
+public:
+  User(char a, int d) : Device(a, d) { }
+};
+
 extern Device disk, net, console, cpu;
+extern User user;

@@ -89,7 +89,7 @@ Shell::Shell(int id) {
   for (int i=0; i < bursts; i++)
     {
       usages[i] = 30 + rand() % 20;
-      //nextRequest[i] = &user; //not yet implemented
+      nextRequest[i] = &user; //not yet implemented
     }
   nextRequest[bursts-1] = NULL;// all done!
 }

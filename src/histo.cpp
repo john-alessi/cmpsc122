@@ -55,7 +55,7 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   int nonInteractiveTasks = 0;
   for(int i = 0; i < size; i++) {
     if(!history[i]->isInteractive()) {
-      avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());///
+      avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());
       nonInteractiveTasks++;
     }
   }
@@ -69,16 +69,16 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   for(int i = 0; i < size; i++) {
     if(history[i]->isInteractive()) {
       ProcIterator it = history[i]->getLog().begin();
-      while(it.state() != 'I') {
+      while(it.state() != 'I' && it.state() != 'U') {
 	it.advance();
       }
       prev = it.state();
       it.advance();
       while(it != history[i]->getLog().end()) {
-	if(prev == 'I') {
+	if(prev == 'I' || prev == 'U') {
 	  responseStart = it.time();
 	}
-	else if(it.state() == 'I') {
+	else if(it.state() == 'I' || it.state() == 'U') {
 	  responses++;
 	  avgResponse += (it.time() - responseStart);
 	  if(maxResponse < it.time() - responseStart) {
@@ -99,16 +99,16 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   for(int i = 0; i < size; i++) {
     if(history[i]->isInteractive()) {
       ProcIterator it = history[i]->getLog().begin();
-      while(it.state() != 'I') {
+      while(it.state() != 'I' && it.state() != 'U') {
 	it.advance();
       }
       prev = it.state();
       it.advance();
       while(it != history[i]->getLog().end()) {
-	if(prev == 'I') {
+	if(prev == 'I' || prev == 'U') {
 	  responseStart = it.time();
 	}
-	else if(it.state() == 'I') {
+	else if(it.state() == 'I' || it.state() == 'U') {
 	  variance += (avgResponse - (it.time() - responseStart))*(avgResponse - (it.time() - responseStart));
 	}
 	prev = it.state();

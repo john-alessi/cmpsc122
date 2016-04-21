@@ -34,6 +34,7 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
 	net.restart();
 	console.restart();
 	cpu.restart();
+	user.restart();
     }
 
     clock = 0;			// initialize simulation clock
