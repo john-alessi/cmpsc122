@@ -7,7 +7,7 @@
 //      clock	(input int)		time at which request is made
 //      tasks	(modified array)	Process information (to record events)
 //      future	(modified ProcList)	record when operation is complete
-void Device::request( int pid, int clock, Process *tasks[], ProcList &future )
+void Device::request( int pid, int clock, Process *tasks[], int& size, ProcList &future )
 {
   if(duration == 0) {
     future.insert(pid, clock, 'X');
@@ -25,6 +25,13 @@ void Device::request( int pid, int clock, Process *tasks[], ProcList &future )
     }
     future.insert(pid, readyTime, 'X');
   }
+}
+
+void User::request(int pid, int clock, Process* tasks[], int& size, ProcList &future) {
+  Device::request(pid, clock, tasks, size, future);
+
+  //DO NEW STUFF HERE
+  
 }
 //  Each device records a letter to be used in the summary display
 //  and the time the operation is expected to take

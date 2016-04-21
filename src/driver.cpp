@@ -11,14 +11,16 @@ int main()
 {
    Scheduler *scheds[] = 	    // make some process schedulers
      { new FCFS(), new RoundRobin(), new Priority(), new Preempt(), new ShortestRemainingTime() };
-   Process *tasks[] = 		    // 4 processes
-     { new Download(0), new Download(1), new Shell(2), new Download(3)};
-   int arrival[] = {0,0,0,0};   // arrive at these times
+
+   Process *tasks[20];
+   int arrival[20];
+   tasks[0] = new Shell(0);
+   arrival[0] = 0;
  
    for (int i=0; i<5; i++)//runs simulation for each scheduler type
    {
-	scheds[i]->runScheduler( tasks, arrival, 4 );
-	displayHistory( tasks, 4, 0, 5000 );
+	scheds[i]->runScheduler( tasks, arrival, 1 );
+	displayHistory( tasks, 1, 0, 5000 );
    }
 }
 

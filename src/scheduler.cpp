@@ -22,6 +22,7 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
     int pid;			// process wanting action (same as process's index in tasks[])
     char nextAct;		// and the action it wants
     int diskReady = 0;
+    int numTasks = size;
 
     Device* nextDevice;
     
@@ -52,7 +53,7 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
 	chooseProcess(pid);
 	tasks[pid]->run(clock, allowance(), nextDevice);
 	if(nextDevice != NULL) {
-	  nextDevice->request(pid, clock, tasks, future);
+	  nextDevice->request(pid, clock, tasks, numTasks, future);
 	}
       }
       else {
