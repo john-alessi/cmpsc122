@@ -33,7 +33,11 @@ using namespace std;
 void displayHistory(Process* history[], int size, int start, int stop) {
   int range = stop - start;
   float charScale = range/50.0;
-  for(int i = 0; i < size; i++) {
+  
+  int numTasks = 0;
+  while(history[numTasks]) {numTasks++;}
+  
+  for(int i = 0; i < numTasks; i++) {
     for(float t = (float)start; t <= stop; t+= charScale) {
       if(t < history[i]->getLog().leadTime()) {
 	cout << " ";
@@ -53,7 +57,7 @@ void displayHistory(Process* history[], int size, int start, int stop) {
 
   float avgTurnaround = 0;
   int nonInteractiveTasks = 0;
-  for(int i = 0; i < size; i++) {
+  for(int i = 0; i < numTasks; i++) {
     if(!history[i]->isInteractive()) {
       avgTurnaround += (history[i]->getLog().tailTime() - history[i]->getLog().leadTime());
       nonInteractiveTasks++;
@@ -66,7 +70,7 @@ void displayHistory(Process* history[], int size, int start, int stop) {
   int responseStart;
   int maxResponse = 0;
   char prev;
-  for(int i = 0; i < size; i++) {
+  for(int i = 0; i < numTasks; i++) {
     if(history[i]->isInteractive()) {
       ProcIterator it = history[i]->getLog().begin();
       while(it.state() != 'I' && it.state() != 'U') {
@@ -96,7 +100,7 @@ void displayHistory(Process* history[], int size, int start, int stop) {
 
   float variance = 0;
   float stdDev = 0;
-  for(int i = 0; i < size; i++) {
+  for(int i = 0; i < numTasks; i++) {
     if(history[i]->isInteractive()) {
       ProcIterator it = history[i]->getLog().begin();
       while(it.state() != 'I' && it.state() != 'U') {

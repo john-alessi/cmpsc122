@@ -7,7 +7,7 @@
 //      clock	(input int)		time at which request is made
 //      tasks	(modified array)	Process information (to record events)
 //      future	(modified ProcList)	record when operation is complete
-void Device::request( int pid, int clock, Process *tasks[], int& size, ProcList &future )
+void Device::request( int pid, int clock, Process *tasks[], ProcList &future )
 {
   if(duration == 0) {
     future.insert(pid, clock, 'X');
@@ -27,8 +27,26 @@ void Device::request( int pid, int clock, Process *tasks[], int& size, ProcList 
   }
 }
 
-void User::request(int pid, int clock, Process* tasks[], int& size, ProcList &future) {
-  Device::request(pid, clock, tasks, size, future);
+void User::request(int pid, int clock, Process* tasks[], ProcList &future) {
+  Device::request(pid, clock, tasks, future);
+
+  int interactives = 0;
+  int downloads = 0;
+  int computations = 0;
+
+  int next = 0;//location (and pid) of the next process
+  while(tasks[next]) {next++;}
+  
+  
+  for(int i = 0; i < next; i++) {
+    string type = tasks[i]->getType();
+    if(type.compare("computation") == 0) {computations++;}
+    if(type.compare("download") == 0) {downloads++;}
+    if(type.compare("computations") == 0) {computations++;}
+  }
+
+  tasks[next] = new Download(next);
+  future.insert(next, clock+duration, 'X');
 
   //DO NEW STUFF HERE
   

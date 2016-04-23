@@ -22,7 +22,6 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
     int pid;			// process wanting action (same as process's index in tasks[])
     char nextAct;		// and the action it wants
     int diskReady = 0;
-    int numTasks = size;
 
     Device* nextDevice;
     
@@ -36,6 +35,10 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
 	console.restart();
 	cpu.restart();
 	user.restart();
+    }
+
+    for(int i = 1; i < 20; i++) {
+      tasks[i] = NULL;
     }
 
     clock = 0;			// initialize simulation clock
@@ -53,7 +56,7 @@ void Scheduler::runScheduler( Process* tasks[], int arrival[], int size)
 	chooseProcess(pid);
 	tasks[pid]->run(clock, allowance(), nextDevice);
 	if(nextDevice != NULL) {
-	  nextDevice->request(pid, clock, tasks, numTasks, future);
+	  nextDevice->request(pid, clock, tasks, future);
 	}
       }
       else {

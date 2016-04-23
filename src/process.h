@@ -7,6 +7,10 @@ class Process
 {
 protected:
   int myId; // an identifier for the larger picture
+  string type;
+  void setType(string s) {
+    type = s;
+  }
 
   int bursts; // total number of CPU bursts (<= 10)
   int usages[10]; // lengths of each burst
@@ -17,6 +21,11 @@ protected:
 
   ProcList log;
 public:
+
+  string getType() {
+    return type;
+  }
+  
   void restart() // start at the very beginning
   {
     currentCycle = 0;

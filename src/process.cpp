@@ -47,6 +47,7 @@ void Process::run( int &clock, int allowance, Device *&next)
 Computation::Computation( int id )
 {
   myId = id;
+  setType("computation");
   bursts = 4 + rand() % 3;// several lengthy CPU bursts
   for (int i=0; i < bursts; i++)
     {
@@ -59,6 +60,7 @@ Computation::Computation( int id )
 Download::Download( int id )
 {
   myId = id;
+  setType("download");
   bursts = 9;// 4 chances to move data, then wrap up
   for (int i=0; i < bursts; i++)
     {
@@ -73,6 +75,7 @@ Download::Download( int id )
 
 Interact::Interact( int id )
 {
+  setType("interact");
   myId = id;
   bursts = 4;// enough to simulate till others are all done
   for (int i=0; i < bursts; i++)

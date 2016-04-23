@@ -20,14 +20,14 @@ public:
   {
     readyTime = 0;
   }
-  virtual void request( int, int, Process* [], int&, ProcList & );
+  virtual void request( int, int, Process* [], ProcList & );
 };
 
 class User : public Device
 {
 public:
   User(char a, int d) : Device(a, d) { }
-  virtual void request(int, int, Process* [], int&, ProcList &);
+  virtual void request(int, int, Process* [], ProcList &);
 };
 
 extern Device disk, net, console, cpu;
