@@ -40,9 +40,12 @@ void User::request(int pid, int clock, Process* tasks[], ProcList &future) {
   
   for(int i = 0; i < next; i++) {
     string type = tasks[i]->getType();
-    if(type.compare("computation") == 0) {computations++;}
-    if(type.compare("download") == 0) {downloads++;}
-    if(type.compare("computations") == 0) {computations++;}
+    
+    if(tasks[i]->isRunning()) {
+      if(type.compare("computation") == 0) {computations++;}
+      if(type.compare("download") == 0) {downloads++;}
+      if(type.compare("computations") == 0) {computations++;}
+    }
   }
 
   tasks[next] = new Download(next);

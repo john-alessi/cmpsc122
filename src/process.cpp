@@ -61,7 +61,7 @@ Download::Download( int id )
 {
   myId = id;
   setType("download");
-  bursts = 9;// 4 chances to move data, then wrap up
+  bursts = 15;// 4 chances to move data, then wrap up
   for (int i=0; i < bursts; i++)
     {
       usages[i] = 40 + rand() % 20;   // not much CPU needed
@@ -77,7 +77,7 @@ Interact::Interact( int id )
 {
   setType("interact");
   myId = id;
-  bursts = 4;// enough to simulate till others are all done
+  bursts = 10;// enough to simulate till others are all done
   for (int i=0; i < bursts; i++)
     {
       usages[i] = 30 + rand() % 20;
@@ -88,7 +88,7 @@ Interact::Interact( int id )
 
 Shell::Shell(int id) {
   myId = id;
-  bursts = 5; //heavily affects runtime of the simulation
+  bursts = 10; //heavily affects runtime of the simulation
   for (int i=0; i < bursts; i++)
     {
       usages[i] = 30 + rand() % 20;

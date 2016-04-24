@@ -71,7 +71,7 @@ class ProcList
 	void popFront( int&, char& );		// remove element from front
 
 	void condense();		// EXTRA CREDIT function //
-	void dump();
+	void dump();	
 };
 
 // and an iterator to help visit all the data

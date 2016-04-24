@@ -13,8 +13,8 @@ protected:
   }
 
   int bursts; // total number of CPU bursts (<= 10)
-  int usages[10]; // lengths of each burst
-  Device *nextRequest[10]; // what to do after each burst
+  int usages[20]; // lengths of each burst
+  Device *nextRequest[20]; // what to do after each burst
 
   int currentCycle; // which burst is next ro run or continue
   int remainingTime; // how much time left on current burst
@@ -54,6 +54,10 @@ public:
 
   int getRemainingTime() {
     return remainingTime;
+  }
+
+  bool isRunning() {
+    return currentCycle < bursts;
   }
 
   void run( int &, int, Device *& );
