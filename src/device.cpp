@@ -44,13 +44,40 @@ void User::request(int pid, int clock, Process* tasks[], ProcList &future) {
     if(tasks[i]->isRunning()) {
       if(type.compare("computation") == 0) {computations++;}
       if(type.compare("download") == 0) {downloads++;}
-      if(type.compare("computations") == 0) {computations++;}
+      if(type.compare("interact") == 0) {interactives++;}
     }
   }
 
-  tasks[next] = new Download(next);
-  future.insert(next, clock+duration, 'X');
+  int select = rand()%3;
+  /*0 - interactive
+    1 - download
+    2 - computation*/
 
+  if(select == 0) {
+    if(interactives < 1) {//only one interactive process at a time
+      tasks[next] = new Interact(next);
+      future.insert(next, clock+duration, 'X');
+    }
+    else {
+      select++;
+    }
+  }
+  if(select == 1) {
+    if(downloads < 3) {//personally I never am downloading more than 3 things at a time
+      tasks[next] = new Download(next);
+      future.insert(next, clock+duration, 'X');
+    }
+    else {
+      select++;
+    }
+  }
+  if(select == 2) {
+    if(computations < 4) {//4 cpu cores
+      tasks[next] = new Computation(next);
+      future.insert(next, clock+duration, 'X');
+    }
+  }
+  
   //DO NEW STUFF HERE
   
 }

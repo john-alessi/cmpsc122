@@ -13,7 +13,7 @@ int main()
     { new FCFS(), new RoundRobin(), new Priority(), new Preempt(), new ShortestRemainingTime() };
   
   
-  
+  srand(time(NULL));
   for (int i=0; i<5; i++)//runs simulation for each scheduler type
     {
       Process *tasks[20];
@@ -22,7 +22,7 @@ int main()
       arrival[0] = 0;
       
       scheds[i]->runScheduler(tasks, arrival, 1);
-      displayHistory( tasks, 20, 0, 10000 );
+      displayHistory( tasks, 20, 0, 20000 );
     }
 }
 

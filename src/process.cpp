@@ -48,7 +48,7 @@ Computation::Computation( int id )
 {
   myId = id;
   setType("computation");
-  bursts = 4 + rand() % 3;// several lengthy CPU bursts
+  bursts = 4 + rand() % 10;// several lengthy CPU bursts
   for (int i=0; i < bursts; i++)
     {
       usages[i] = 200 + rand() % 120;
@@ -88,7 +88,7 @@ Interact::Interact( int id )
 
 Shell::Shell(int id) {
   myId = id;
-  bursts = 10; //heavily affects runtime of the simulation
+  bursts = 15; //heavily affects runtime of the simulation
   for (int i=0; i < bursts; i++)
     {
       usages[i] = 30 + rand() % 20;
